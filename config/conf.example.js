@@ -1,35 +1,41 @@
 module.exports = {
-  "production": {
-    "application": {
-      "port": "",
-      "host": ""
+  production: {
+    application: {
+      port: "",
+      host: ""
     },
-    "db": {
-      "host": "",
-      "port": "",
-      "dbName": ""
+    db: {
+      host: "",
+      port: "",
+      dbName: ""
     }
   },
-  "develop": {
-    "application": {
-      "port": "",
-      "host": ""
+  develop: {
+    application: {
+      port: "",
+      host: ""
     },
-    "db": {
-      "host": "",
-      "port": "",
-      "dbName": ""
+    db: {
+      host: "",
+      port: "",
+      dbName: ""
+    },
+    api:{
+      cryptocompare: {
+        host: "",
+        apiKey: ""
+      }
     }
   },
-  "test": {
-    "application": {
-      "port": "",
-      "host": ""
+  test: {
+    application: {
+      port: "",
+      host: ""
     },
-    "db": {
-      "host": "",
-      "port": "",
-      "dbName": ""
+    db: {
+      host: "",
+      port: "",
+      dbName: ""
     }
   }
 }
