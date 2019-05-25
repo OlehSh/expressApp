@@ -1,0 +1,23 @@
+const { createServer } = require('http');
+const app = require('../app');
+const config = require('../config/config');
+
+const env = process.env.NODE_ENV ? config[process.env.NODE_ENV.trim()] : 'production';
+const PORT = env.app.port;
+const HOST =  env.app.host;
+
+global.gConfig = env;
+const server = createServer(app);
+process.on('uncaughtException', (err) => {
+    console.log('Something goes wrong');
+    console.log(err.message);
+    process.exit(1);
+});
+
+process.on('exit', () => {
+    console.log('Bye!!!');
+});
+
+server.listen(PORT, HOST, () => {
+    console.log(`Server listen on ${HOST}:${PORT}`);
+});
