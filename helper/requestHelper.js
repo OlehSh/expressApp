@@ -17,8 +17,6 @@ const requestHelper = {
           }
         });
       }).on("error", (err) => {
-        console.log('ERROR');
-        console.warn(err);
         reject(err);
       });
     });
@@ -26,6 +24,11 @@ const requestHelper = {
   post: (options) => {
     return new Promise((resolve, reject) => {
       resolve('HTTP post');
+    });
+  },
+  request: (options) => {
+    return new Promise((resolve, reject) => {
+      resolve('HTTP request');
     });
   }
 };

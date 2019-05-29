@@ -5,10 +5,11 @@
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.0",
     "express-validator": "^5.3.1",
-    "mongoose": "^5.5.10",
-    "http": "^0.0.0"
+    "http": "^0.0.0",
+    "mongoose": "^5.5.10"
   },
   "devDependencies": {
     "chai": "4.2.0",
@@ -30,5 +31,11 @@
   "bugs": {
     "url": "https://github.com/OlehSh/expressApp/issues"
   },
-  "homepage": "https://github.com/OlehSh/expressApp#readme"
+  "homepage": "https://github.com/OlehSh/expressApp#readme",
+  "nodemonConfig": {
+    "ignore": [
+      "frontend-app/*"
+    ],
+    "delay": "2500"
+  }
 }

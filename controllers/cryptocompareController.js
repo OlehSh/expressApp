@@ -20,7 +20,8 @@ const cryptocompareController = {
       if (response.data && response.data.Response === "Error") {
         return res.status(400).send({message: response.data.Message});
       }
-      return res.send({data: response.data})
+      // let data = response.data;
+      return res.send(response.data)
     } catch (error) {
       return res.status(500).send(error.message  ? {message: error.message} : error);
     }
