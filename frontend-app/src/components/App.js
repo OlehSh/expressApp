@@ -1,11 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import {BrowserRouter, Route} from "react-router-dom";
 import './App.scss';
-import Main from "./pages/Main";
-import Toolbar from "@material-ui/core/Toolbar";
-import Link from "@material-ui/core/Link";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import AppBar from "@material-ui/core/AppBar";
+import Main from "./pages/Main";
 import CoinbaseReport from "./pages/CoinbaseReport";
 
 
@@ -13,64 +11,29 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableHead: ['item searched'],
-      tableRows: []
+      value: 1
     };
-    this.getSinglePrise = this.getSinglePrise.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  getSinglePrise() {
-    axios.get('http://localhost:4001/crypto/single-price/ETH?convertTo=USD')
-      .then(response => {
-        let tableHead = [''];
-        let tableRows = [];
-        let row = ['ETH'];
-        for (let key in response.data) {
-          if (response.data.hasOwnProperty(key)) {
-            tableHead.push(key);
-            row.push(response.data[key]);
-          }
-        }
-        tableRows.push(row);
-        console.log(row);
-        console.log(tableRows);
-        this.setState(() => ({
-          tableHead: tableHead,
-          tableRows: tableRows
-        }));
-        console.log(this.state.tableRows);
-      })
-      .catch(err => {
-        console.warn({file: 'App.js', function: 'getSinglePrises', message: err.message});
-      })
-  };
+  handleChange(event, newValue) {
+    this.setState(() => ({
+      value: newValue
+    }));
+  }
 
-// <div className="App">
-// <div className="App-content">
-// <Typography variant="h2" component="h1" gutterBottom>
-// My Express App
-// </Typography>
-//
-// </div>
-// </div>
   render() {
     return (
-      <BrowserRouter>
         <div className="App">
           <AppBar position="static" className="App-header">
-            <Toolbar>
-              <Link href="/home" className="App-link">
-                Home
-              </Link>
-              <Link href="/reports" className="App-link">Coinbase Reports</Link>
-            </Toolbar>
+            <Tabs value={this.state.value} onChange={this.handleChange}>
+              <Tab label="Main" />
+              <Tab label="Reports" />
+            </Tabs>
           </AppBar>
-          <Route path={"/"}>
-            <Route path={"/home"} component={Main}/>
-            <Route path={"/reports"} component={CoinbaseReport}/>
-          </Route>
+          {this.state.value === 0 && <Main />}
+          {this.state.value === 1 && <CoinbaseReport />}
         </div>
-      </BrowserRouter>
     )
   };
 
