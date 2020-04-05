@@ -1,12 +1,7 @@
 // In this file you can configure migrate-mongo
-console.log('TEST');
-console.log(process.env.MONGO_DB_NAME);
-console.log(process.env.MONGO_DB_PORT);
 const config = {
   mongodb: {
     url: `mongodb://${process.env.MONGO_DB_HOST}:${process.env.MONGO_DB_PORT}`,
-
-    // TODO Change this to your database name:
     databaseName: process.env.MONGO_DB_NAME,
 
     options: {

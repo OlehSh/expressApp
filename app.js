@@ -2,10 +2,12 @@ const express = require('express');
 const app = express();
 var cors = require('cors')
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const index = require('./routes/index');
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(passport.initialize());
 app.use('/', index);
 app.use((req, res, next) => {
   res.status(404);

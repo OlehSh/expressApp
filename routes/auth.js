@@ -1,6 +1,8 @@
 const router  = require('express').Router();
-const { signIn, signOut } = require('../controllers/auth');
+const { signIn, signOut, signUp } = require('../controllers/auth');
 
-router.get('/single-price/:from', getSinglePrice);
+router.post('/sign-up', signUp);
+router.post('/sign-in', signIn);
+router.get('/sign-out', signOut);
 
 module.exports = router;
