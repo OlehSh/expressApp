@@ -3,28 +3,30 @@ import FormControl from "@material-ui/core/FormControl"
 import FormLabel from "@material-ui/core/FormLabel"
 import FormGroup from "@material-ui/core/FormGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Switch from "@material-ui/core/Switch"
+import RadioGroup from "@material-ui/core/RadioGroup"
+import {Radio} from "@material-ui/core";
 
-class checkboxPanel extends React.Component{
+
+class radioButtonsGroup extends React.Component{
   constructor(props) {
     super(props);
-    // this.state = {
-    //   ...this.props.checkboxList
-    // };
+    this.state = {
+      ...this.props.buttonsList
+    };
   }
 
   render() {
     return <FormControl component="fieldset">
       <FormLabel component="legend">{this.props.title}</FormLabel>
-      <FormGroup>
-        {Object.keys(this.props.checkboxList).map((key) => (
-          <FormControlLabel key={key}
-            control={<Switch checked={this.props.checkboxList[key]} onChange={e => this.props.handleChange(key, e)} value={key} />}
+      <RadioGroup onChange={this.props.handleRadioButtons}>
+        {Object.keys(this.props.buttonsList).map((key) => (
+          <FormControlLabel key={key} value={key}
+            control={<Radio />}
             label={key}
           />
         ))}
-      </FormGroup>
+      </RadioGroup>
     </FormControl>
   }
 }
-export default checkboxPanel;
+export default radioButtonsGroup;

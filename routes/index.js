@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const indexController = require('../controllers/indexController');
-const cryptocompareController = require('../controllers/cryptocompareController');
+const cryptocompareRouter = require('./cryptoCompare');
+
 
 const router = Router();
 router.get('/', indexController.fetch);
+router.use('/crypto', cryptocompareRouter)
 
-//crypto Currency
-router.get('/crypto/single-price/:from', cryptocompareController.getSinglePrice);
 module.exports = router;

@@ -1,9 +1,11 @@
 const requestHelper = require('../helper/requestHelper');
+const { api } = require('../config/config');
 
 
 const cryptocompareController = {
   getSinglePrice: async (req, res) => {
-    const cryptocompareParams = global.gConfig.api.cryptocompare;
+    const cryptocompareParams =api.cryptocompare;
+    //@TODO use express-validator
     if (!req.query.convertTo) {
       return res.status(400).send({message: 'convertTo query param missing example: convertTo=USD,EUR,USD'});
     }

@@ -25,6 +25,15 @@ body {
   &-content {
     margin: 20px 15px;
   }
+  .container {
+    width: 90vw;
+    margin: 0 auto;
+    border-radius: unset;
+    padding: 0 15px;
+  }
+  .button-wrapper {
+    margin: 15px 0;
+  }
 }
 
 

@@ -3,9 +3,17 @@
   "version": "1.0.0",
   "description": "my test App",
   "main": "app.js",
+  "scripts": {
+    "start": "dotenv -e .env node bin/www",
+    "develop": "dotenv -e .env nodemon bin/www",
+    "migration:up": "dotenv -e .env migrate-mongo up",
+    "migration:down": "dotenv -e .env migrate-mongo down",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.0",
     "express-validator": "^5.3.1",
     "http": "^0.0.0",
@@ -16,11 +24,6 @@
     "mocha": "^6.1.4",
     "eslint": "^5.16.0",
     "nodemon": "^1.19.0"
-  },
-  "scripts": {
-    "start": "set NODE_ENV=production && nodemon bin/www",
-    "develop": "set NODE_ENV=develop && nodemon bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -36,6 +39,6 @@
     "ignore": [
       "frontend-app/*"
     ],
-    "delay": "2500"
+    "delay": 2500
   }
 }

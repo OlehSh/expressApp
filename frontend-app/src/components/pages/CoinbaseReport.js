@@ -1,5 +1,4 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import Table from "@material-ui/core/Table"
 import TableHead from "@material-ui/core/TableHead"
@@ -8,7 +7,9 @@ import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
 import Button from "@material-ui/core/Button"
 import CheckboxPanel from "./../basicElements/checkboxPanel/CheckboxPanel"
+import RadiobuttonsGroup from "./../basicElements/RadiobuttonsGroup/RadiobuttonsGroup"
 import axios from "axios";
+import Container from "@material-ui/core/Container";
 
 class CoinbaseReport extends React.Component {
   constructor(props) {
@@ -17,17 +18,30 @@ class CoinbaseReport extends React.Component {
       tableHead: ['item searched'],
       tableRows: [],
       checkboxList: {
-        eth: false,
-        krb: false,
-        btc: false,
+        EUR: false,
+        USD: false,
+        UAH: false,
+      },
+      buttonsList: {
+        ETH: false,
+        KRB: false,
+        BTC: false,
       }
     };
     this.handleChange = this.handleChange.bind(this);
     this.getSinglePrise = this.getSinglePrise.bind(this);
   }
   getSinglePrise() {
-
-    axios.get('http://localhost:3001/crypto/single-price/ETH?convertTo=USD')
+    console.log(this.state.checkboxList);
+    let url = `http://localhost:3001/crypto/single-price/`;
+    let options = {params: {convertTo: 'USD'}};
+    Object.keys(this.state.checkboxList).map((key) => {
+      if(this.state.checkboxList[key]){
+        console.log(key);
+        url +=`${key},`
+      }
+    });
+    axios.get(url.replace(/,$/,''), options)
       .then(response => {
         let tableHead = [''];
         let tableRows = [];
@@ -49,9 +63,6 @@ class CoinbaseReport extends React.Component {
       })
   };
   handleChange(name, event) {
-    // console.log('handleChange');
-    // console.log(name);
-    // console.log(event);
     const status = event.target.checked;
     this.setState((state) => {
         state.checkboxList[name] = status;
@@ -59,15 +70,19 @@ class CoinbaseReport extends React.Component {
       }
     )
   };
+  handleRadioButtons(event) {
+    console.log(event);
+  }
   render() {
-    return <Paper>
+    return <Container fixed>
       <Typography variant="h3" component="h2" gutterBottom>
         Data Table
       </Typography>
-      <div>
+      <div className='button-wrapper'>
         <Button onClick={this.getSinglePrise} variant="contained" color="default">Get Price</Button>
       </div>
-      <CheckboxPanel title='Currency list' handleChange = {this.handleChange} checkboxList={this.state.checkboxList}/>
+      <CheckboxPanel title='Money list' handleChange = {this.handleChange} checkboxList={this.state.checkboxList}/>
+      <RadiobuttonsGroup title='Crypto list' handleRadioButtons = {this.handleRadioButtons} buttonsList = {this.state.buttonsList}/>
       {this.state.tableHead.length > 0 && this.state.tableRows.length > 0 ? (
         <Table>
           <TableHead>
@@ -90,7 +105,7 @@ class CoinbaseReport extends React.Component {
           </TableBody>
         </Table>
       ) : (<Typography align='center' component='div' gutterBottom paragraph>No Data</Typography>)}
-    </Paper>
+    </Container>
   }
 }
 export default CoinbaseReport;
