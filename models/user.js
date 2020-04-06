@@ -1,12 +1,10 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const Schema = mongoose.Schema;
-const { USER_ROLES } = require('../config/constants');
-
-SALT_WORK_FACTOR = 5;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const {USER_ROLE} = require('../config/constants')
+const jwt = require('jsonwebtoken')
 
 const UserSchema = new Schema({
-  firstName:  {
+  firstName: {
     type: String,
     required: true
   },
@@ -14,48 +12,55 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  email:   {
+  email: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    dropDups: true
   },
   userRole: {
     type: Number,
-    enum: Object.values(USER_ROLES)
+    enum: Object.values(USER_ROLE),
+    defaultValue: USER_ROLE.USER
   },
   phone: {
     type: String,
     validate: {
       validator: (v) => {
-        return /[+\d-]/.test(v);
+        return /[+\d-]/.test(v)
       },
       message: props => `${props.value} is not a valid phone number!`
     },
-    required: false,
+    required: false
   },
   password: {
     type: String,
     required: true
   }
-}, { timestamps: true });
+}, {timestamps: true})
 
-UserSchema.pre('save', function(next) {
-  const user = this;
-  if (!user.isModified('password')) return next();
-  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-    if (err) return next(err);
-    bcrypt.hash(user.password, salt, function(err, hash) {
-      if (err) return next(err);
-      user.password = hash;
-      next();
-    });
-  });
-});
+UserSchema.methods.generateJWT = async function() {
+  console.log('generateJWT')
+  console.log(this)
+  const today = new Date()
+  const expirationDate = new Date(today)
+  expirationDate.setDate(today.getDate() + 60)
 
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
-};
-const User = mongoose.model('User', UserSchema);
-module.exports = User;
+  return jwt.sign({
+    email: this.email,
+    id: this._id,
+    exp: parseInt(expirationDate.getTime() / 1000, 10)
+  }, 'secret')
+}
+
+UserSchema.methods.toAuthJSON = async function() {
+  console.log('toAuthJSON')
+  console.log(this);
+  return {
+    _id: this._id,
+    email: this.email,
+    token: await this.generateJWT()
+  }
+}
+const User = mongoose.model('User', UserSchema)
+module.exports = User
