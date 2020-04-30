@@ -5,7 +5,7 @@ module.exports = {
     let password = '123456';
     const salt = await bcrypt.genSalt(process.env.SALT_WORK_FACTOR);
     password = await bcrypt.hash(password, salt);
-    await db.collection('user').insertOne({
+    await db.collection('users').insertOne({
       firstName: 'Admin',
       lastName: 'Admin',
       email: 'admin@test.com',
@@ -15,6 +15,6 @@ module.exports = {
   },
 
   async down(db, client) {
-    await db.collection('user').deleteOne({email: 'admin@test.com'})
+    await db.collection('users').deleteOne({email: 'admin@test.com'})
   }
 };

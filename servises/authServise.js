@@ -17,15 +17,9 @@ const createUser = async (body) => {
       email,
       password,
     })
-    console.log('SAVE')
-    return user.save(function(err, savedUser) {
-      console.log(err);
-      if (err) {
-        throw createError(422, err)
-      }
-      console.log(savedUser);
-      return user.toAuthJSON();
-    })
+    await user.save();
+    const response =  user.toAuthJSON();
+    return response;
 }
 
 module.exports = {

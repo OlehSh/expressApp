@@ -2,7 +2,7 @@ const { createUser } = require('../servises/authServise')
 
 const signUp = async (req, res, next) => {
   try {
-    const user = await createUser(req.body)
+    const user = await createUser(req.body);
     return res.json({user});
   } catch (e) {
     next(e)

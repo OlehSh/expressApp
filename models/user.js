@@ -15,13 +15,15 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
-    dropDups: true
+    dropDups: true,
+    validator: (v) => {
+      return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
+    }
   },
   userRole: {
     type: Number,
     enum: Object.values(USER_ROLE),
-    defaultValue: USER_ROLE.USER
+    default: USER_ROLE.USER,
   },
   phone: {
     type: String,
@@ -38,10 +40,8 @@ const UserSchema = new Schema({
     required: true
   }
 }, {timestamps: true})
-
-UserSchema.methods.generateJWT = async function() {
-  console.log('generateJWT')
-  console.log(this)
+// @TODO remove JWT generation from model
+UserSchema.methods.generateJWT = async () => {
   const today = new Date()
   const expirationDate = new Date(today)
   expirationDate.setDate(today.getDate() + 60)
@@ -49,18 +49,10 @@ UserSchema.methods.generateJWT = async function() {
   return jwt.sign({
     email: this.email,
     id: this._id,
+    userRole: this.userRole,
     exp: parseInt(expirationDate.getTime() / 1000, 10)
   }, 'secret')
 }
 
-UserSchema.methods.toAuthJSON = async function() {
-  console.log('toAuthJSON')
-  console.log(this);
-  return {
-    _id: this._id,
-    email: this.email,
-    token: await this.generateJWT()
-  }
-}
 const User = mongoose.model('User', UserSchema)
 module.exports = User
