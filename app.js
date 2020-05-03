@@ -21,10 +21,19 @@ app.use((req, res, next) => {
   next();
 });
 app.use((err, req, res, next) => {
-  res.status(500);
+  if (err && res.statusCode === 200) {
+    switch (err.name) {
+      case 'UnauthorizedError':
+        res.status(401);
+        break;
+      default:
+        res.status(500)
+        break;
+    }
+  }
   logger.error(err);
   res.json({
-    status: 500,
+    status: res.statusCode,
     message: err.message,
   });
   next();

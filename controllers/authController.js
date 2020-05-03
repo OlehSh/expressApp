@@ -1,4 +1,4 @@
-const { createUser } = require('../servises/authServise')
+const { createUser } = require('../servises/userServise')
 
 const signUp = async (req, res, next) => {
   try {
@@ -14,12 +14,7 @@ const signIn = async (req, res, next) => {
   res.json('Sign-in')
 }
 
-const signOut = async (req, res, next) => {
-  console.log('sign Out')
-  res.json('Sign-Out')
-}
 module.exports = {
   signIn,
-  signOut,
   signUp
 }

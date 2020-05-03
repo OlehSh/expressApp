@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
 const { USER_ROLE } = require('../config/constants');
 module.exports = {
-  async up(db, client) {
-    let password = '123456';
-    const salt = await bcrypt.genSalt(process.env.SALT_WORK_FACTOR);
+  async up(db) {
+    let password = process.env.USER_ADMIN_PASSWORD;
+    const salt = await bcrypt.genSalt(parseInt(process.env.SALT_WORK_FACTOR, 10));
     password = await bcrypt.hash(password, salt);
     await db.collection('users').insertOne({
       firstName: 'Admin',

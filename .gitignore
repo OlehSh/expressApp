@@ -1,4 +1,5 @@
+.idea
 *.log
 config/config.js
 /node_modules
-/.env
+.env
