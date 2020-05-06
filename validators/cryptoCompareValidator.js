@@ -1,4 +1,4 @@
-const {checkSchema} = require('express-validator')
+const { checkSchema } = require('express-validator');
 
 const checkSinglePriseRequest = checkSchema({
   from: {

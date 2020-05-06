@@ -6,6 +6,7 @@ const passport = require('passport');
 const index = require('./routes/index');
 const logger = require('./lib/logger')
 require('./db/mongodb');
+require('./lib/passport');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
