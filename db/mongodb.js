@@ -12,6 +12,7 @@ mongoose.connection.once
 mongoose.connection.on('open', () => {
   mongoose.set('bufferCommands', false);
   mongoose.set('useCreateIndex', true);
+  mongoose.set('useFindAndModify', false);
   logger.info(`MongoDB connection open on ${url}`)
 })
 

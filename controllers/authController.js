@@ -5,8 +5,8 @@ const moment  = require('moment');
 
 const signUp = async (req, res, next) => {
   try {
-    const user = await createUser(req.body);
-    return res.json({user});
+    const result = await createUser(req.body);
+    return res.json(result);
   } catch (e) {
     next(e)
   }

@@ -1,6 +1,6 @@
-## Test Express App
+## Express App
 ### Requirements
-node v 10.15.0 <br />
+node v >= 10.15.0 <br />
 MongoDB v >= 4.0.5 <br />
 yarn <br />
 dotenv-cli <br />

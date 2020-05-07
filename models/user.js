@@ -39,9 +39,9 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
   }
-}, { timestamps: true })
+}, { versionKey: false, timestamps: true })
 
 UserSchema.methods.validatePassword = async function (password) {
   try {
@@ -51,6 +51,11 @@ UserSchema.methods.validatePassword = async function (password) {
     throw createError(500, 'validatePassword Unhandled error')
   }
 }
-
+UserSchema.set('toObject', {
+  transform: (doc, ret, opt) => {
+    delete ret.password;
+    return ret;
+  }
+});
 const User = mongoose.model('User', UserSchema)
 module.exports = User
