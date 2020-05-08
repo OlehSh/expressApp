@@ -1,16 +1,16 @@
-const { createUser } = require('../servises/userServise')
-const passport  = require('passport')
+const passport = require('passport');
+const moment = require('moment');
+const { createUser } = require('../servises/userServise');
 const { generateJWT } = require('../lib/jwt');
-const moment  = require('moment');
 
 const signUp = async (req, res, next) => {
   try {
     const result = await createUser(req.body);
     return res.json(result);
   } catch (e) {
-    next(e)
+    next(e);
   }
-}
+};
 
 const signIn = async (req, res, next) => {
   try {
@@ -28,17 +28,17 @@ const signIn = async (req, res, next) => {
         email: user.email,
         id: user._id,
         userRole: user.userRole,
-        exp: parseInt(moment.utc().add(process.env.JWT_AUTH_TOKEN_EXPIRE_DAYS, 'days').format('X'), 10)
-      }
+        exp: parseInt(moment.utc().add(process.env.JWT_AUTH_TOKEN_EXPIRE_DAYS, 'days').format('X'), 10),
+      };
       const token = await generateJWT(payload, process.env.JWT_SECRET);
       res.status(201).json({ token });
     })(req, res, next);
   } catch (e) {
-    next(e)
+    next(e);
   }
-}
+};
 
 module.exports = {
   signIn,
-  signUp
-}
+  signUp,
+};

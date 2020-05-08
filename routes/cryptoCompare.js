@@ -1,4 +1,4 @@
-const router  = require('express').Router();
+const router = require('express').Router();
 const { getSinglePrice } = require('../controllers/cryptocompareController');
 const { checkSinglePriseRequest } = require('../validators/cryptoCompareValidator');
 const { validateErrors } = require('../middleware/valedateErrors');

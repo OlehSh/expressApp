@@ -1,6 +1,6 @@
 module.exports = {
   USER_ROLE: {
     ADMIN: 1,
-    USER: 2
-  }
+    USER: 2,
+  },
 };

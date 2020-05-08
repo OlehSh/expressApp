@@ -1,8 +1,8 @@
 module.exports = {
-  api:{
+  api: {
     cryptocompare: {
       host: process.env.CRYPTOCOMPARE_HOST,
-      apiKey:process.env.CRYPTOCOMPARE_API_KEY
-    }
-  }
-}
+      apiKey: process.env.CRYPTOCOMPARE_API_KEY,
+    },
+  },
+};

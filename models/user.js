@@ -1,26 +1,24 @@
-const mongoose = require('mongoose')
-const {USER_ROLE} = require('../config/constants')
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const createError = require('http-errors')
+const createError = require('http-errors');
+const { USER_ROLE } = require('../config/constants');
 
-const Schema = mongoose.Schema
+const { Schema } = mongoose;
 const UserSchema = new Schema({
   firstName: {
     type: String,
-    required: true
+    required: true,
   },
   lastName: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     unique: true,
     required: true,
     dropDups: true,
-    validator: (v) => {
-      return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
-    }
+    validator: (v) => /^([\w-.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v),
   },
   userRole: {
     type: Number,
@@ -30,32 +28,33 @@ const UserSchema = new Schema({
   phone: {
     type: String,
     validate: {
-      validator: (v) => {
-        return /[+\d-]/.test(v)
-      },
-      message: props => `${props.value} is not a valid phone number!`
+      validator: (v) => /[+\d-]/.test(v),
+      message: (props) => `${props.value} is not a valid phone number!`,
     },
-    required: false
+    required: false,
   },
   password: {
     type: String,
     required: true,
-  }
-}, { versionKey: false, timestamps: true })
+  },
+}, {
+  versionKey: false,
+  timestamps: true,
+});
 
 UserSchema.methods.validatePassword = async function (password) {
   try {
-    let match = await bcrypt.compare(password, this.password)
-    return match
+    const match = await bcrypt.compare(password, this.password);
+    return match;
   } catch (e) {
-    throw createError(500, 'validatePassword Unhandled error')
+    throw createError(500, 'validatePassword Unhandled error');
   }
-}
+};
 UserSchema.set('toObject', {
-  transform: (doc, ret, opt) => {
+  transform: (doc, ret) => {
     delete ret.password;
     return ret;
-  }
+  },
 });
-const User = mongoose.model('User', UserSchema)
-module.exports = User
+const User = mongoose.model('User', UserSchema);
+module.exports = User;

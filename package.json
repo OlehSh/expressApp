@@ -8,6 +8,7 @@
     "develop": "dotenv -e .env nodemon bin/www",
     "migration:up": "dotenv -e .env migrate-mongo up",
     "migration:down": "dotenv -e .env migrate-mongo down",
+    "eslint:fix": "eslint -fix ${__dirname}",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -30,7 +31,9 @@
   "devDependencies": {
     "chai": "4.2.0",
     "mocha": "^6.1.4",
-    "eslint": "^5.16.0"
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
   },
   "repository": {
     "type": "git",

@@ -21,18 +21,16 @@ const checkCreateUser = checkSchema({
   confirmPassword: {
     optional: false,
     custom: {
-      options: (val, {req, location, path}) => {
-        return (val === req.body.password)
-      },
-      errorMessage: 'confirmPassword and password should be equal'
-    }
+      options: (val, { req }) => val === req.body.password,
+      errorMessage: 'confirmPassword and password should be equal',
+    },
   },
   phone: {
     optional: true,
     isString: true,
   },
-})
+});
 
 module.exports = {
-  checkCreateUser
-}
+  checkCreateUser,
+};

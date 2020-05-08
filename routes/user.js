@@ -1,4 +1,4 @@
-const router  = require('express').Router();
+const router = require('express').Router();
 const {
   getUsers,
   deleteUser,
@@ -6,7 +6,7 @@ const {
   getUser,
   getProfile,
   updateProfile,
-  deleteProfile
+  deleteProfile,
 } = require('../controllers/userController');
 const { validateErrors } = require('../middleware/valedateErrors');
 const { checkUserId, checkUpdateUser } = require('../validators/userValidator');
@@ -19,21 +19,24 @@ router.get(
   checkUserExists,
   permit(accessLevels.ADMIN),
   validateErrors,
-  getUsers);
+  getUsers,
+);
 router.get(
   '/me',
   auth.required,
   checkUserExists,
   permit(accessLevels.ALL),
   validateErrors,
-  getProfile);
+  getProfile,
+);
 router.get(
   '/:id',
   auth.required,
   checkUserExists,
   permit(accessLevels.ADMIN),
   validateErrors,
-  getUser);
+  getUser,
+);
 router.put('/me', auth.required, checkUserExists, permit(accessLevels.ALL), validateErrors, updateProfile);
 router.put('/:id', auth.required, checkUserExists, permit(accessLevels.ADMIN), checkUserId, checkUpdateUser, validateErrors, updateUser);
 router.delete('/me', auth.required, checkUserExists, permit(accessLevels.USER), validateErrors, deleteProfile);

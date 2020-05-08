@@ -7,8 +7,8 @@ const userRouter = require('./user');
 
 const router = Router();
 router.get('/', indexController.fetch);
-router.use('/crypto', cryptocompareRouter)
-router.use('/auth', authRouter)
-router.use('/user', userRouter)
+router.use('/crypto', cryptocompareRouter);
+router.use('/auth', authRouter);
+router.use('/user', userRouter);
 
 module.exports = router;

@@ -1,5 +1,6 @@
-const {checkSchema, param} = require('express-validator');
-const { Types } = require('mongoose')
+const { checkSchema, param } = require('express-validator');
+const { Types } = require('mongoose');
+
 const checkUpdateUser = checkSchema({
   firstName: {
     optional: true,
@@ -9,11 +10,9 @@ const checkUpdateUser = checkSchema({
     optional: true,
     isString: true,
   },
-})
-const checkUserId = param('id').customSanitizer(value => {
-  return Types.ObjectId(value)
-})
+});
+const checkUserId = param('id').customSanitizer((value) => Types.ObjectId(value));
 module.exports = {
   checkUserId,
-  checkUpdateUser
-}
+  checkUpdateUser,
+};
