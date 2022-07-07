@@ -23,7 +23,7 @@
     "http": "^0.0.0",
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.25.1",
+    "moment": "^2.29.4",
     "mongoose": "^5.7.5",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"
